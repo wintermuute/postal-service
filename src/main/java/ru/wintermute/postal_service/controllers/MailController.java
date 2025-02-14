@@ -18,7 +18,7 @@ public class MailController {
     @PostMapping()
     public String addPostage(@ModelAttribute("postage") Postage postage) {
 
-        return "redirect:/mail";
+        return "redirect:/mail/add";
 
     }
 
