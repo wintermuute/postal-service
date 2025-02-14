@@ -1,15 +1,25 @@
 package ru.wintermute.postal_service.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "warehouse")
 public class Warehouse {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "postalcode")
     private int postalCode;
+    @Column(name = "city")
     private String city;
+    @Column(name = "street")
     private String street;
+    @Column(name = "building")
     private int building;
+    @Column(name = "comment")
     private String comment;
 
     public Warehouse(){
