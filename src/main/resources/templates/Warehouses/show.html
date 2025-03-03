@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Склад</title>
+</head>
+<body>
+<p th:text="${warehouse.getName() }">VALUE</p>
+<div>
+  <p>Адрес:</p><p th:text="${warehouse.getPostalCode() + ',' + warehouse.getCity() + ',' + warehouse.getStreet() + ',' + warehouse.getBuilding()}">VALUE</p>
+</div>
+<hr/>
+<a th:href="@{/warehouses/{id}/edit(id=${warehouse.getId()})}">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/warehouses/{id}(id=${warehouse.getId()})}">
+  <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

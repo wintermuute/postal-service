@@ -13,18 +13,18 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 import java.util.Objects;
 
-@Configuration
+//@Configuration
 //@PropertySource("classpath:application.properties")
 public class DBConfig {
 
     private final Environment environment;
 
-    @Autowired
+    //@Autowired
     public DBConfig(Environment environment) {
         this.environment = environment;
     }
 
-    @Bean
+    //@Bean
     public DataSource dataSource(@Value("${driver}") String driver) {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -36,6 +36,6 @@ public class DBConfig {
         return  dataSource;
     }
 
-    @Bean
+    //@Bean
     public JdbcTemplate jdbcTemplate() {return  new JdbcTemplate(dataSource(""));}
 }
