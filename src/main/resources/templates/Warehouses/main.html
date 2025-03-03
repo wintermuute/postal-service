@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th = "http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Склады</title>
 </head>
 <body>
-
+<div th:each="warehouse : ${warehouses}">
+  <a th:href="@{/warehouses/{id}(id=${warehouse.getId()})}"
+     th:text="${warehouse.getName()}">warehouse</a>
+</div>
+<br/>
+<hr/>
+<a href = "/warehouse/new"> Зарегистрировать склад</a>
 </body>
 </html>
