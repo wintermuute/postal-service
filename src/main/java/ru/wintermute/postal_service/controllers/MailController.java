@@ -28,8 +28,7 @@ public class MailController {
     public String addPostage(@ModelAttribute("postage") Postage postage) {
         postage.generateTrackNumber();
         postage.calculatePrice();
-
-
+        mailService.save(postage);
         return "redirect:/mail";
 
     }
