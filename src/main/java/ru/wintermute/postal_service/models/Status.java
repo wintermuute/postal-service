@@ -1,7 +1,16 @@
 package ru.wintermute.postal_service.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "status")
 public class Status {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
+    @Column(name = "info")
     private String info;
 
     public Status() {
