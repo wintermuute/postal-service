@@ -52,4 +52,32 @@ public class Postage {
         this.status = status;
         this.comment = comment;
     }
+
+    public void generateTrackNumber() {
+        String trackNumber = "";
+        setTrackNumber(trackNumber);
+
+    }
+
+    public void calculatePrice() {
+        double price = this.weigth * 0.5;
+        this.setPrice(price);
+
+    }
+
+    public void setTrackNumber(String trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getTrackNumber() {
+        return trackNumber;
+    }
+
+    public double getWeigth() {
+        return weigth;
+    }
 }
