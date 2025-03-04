@@ -22,8 +22,13 @@ public class MailController {
         this.mailService = mailService;
     }
 
+    @GetMapping()
+    public String index(){
+        return "postages/index";
+    }
+
     @GetMapping("/add")
-    public String mailPage(Model model) {
+    public String fill(Model model) {
         model.addAttribute("postage",new Postage());
         return "Postages/add";
     }
