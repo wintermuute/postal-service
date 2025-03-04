@@ -2,6 +2,8 @@ package ru.wintermute.postal_service.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "warehouse")
 public class Warehouse {
@@ -21,6 +23,8 @@ public class Warehouse {
     private int building;
     @Column(name = "comment")
     private String comment;
+    @OneToMany(mappedBy = "currentWarehouse", cascade = CascadeType.PERSIST)
+    private List<Postage> postagesInStore;
 
     public Warehouse(){
 
@@ -89,5 +93,13 @@ public class Warehouse {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public List<Postage> getPostagesInStore() {
+        return postagesInStore;
+    }
+
+    public void setPostagesInStore(List<Postage> postagesInStore) {
+        this.postagesInStore = postagesInStore;
     }
 }
