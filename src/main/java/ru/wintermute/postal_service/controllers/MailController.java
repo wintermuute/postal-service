@@ -11,14 +11,14 @@ import ru.wintermute.postal_service.models.Postage;
 @RequestMapping("/mail")
 public class MailController {
 
-    @GetMapping()
+    @GetMapping("/add")
     public String mailPage() {
-        return "mail/add";
+        return "Postages/add";
     }
     @PostMapping()
     public String addPostage(@ModelAttribute("postage") Postage postage) {
 
-        return "redirect:/mail/add";
+        return "redirect:/mail";
 
     }
 

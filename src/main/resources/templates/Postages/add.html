@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая книга</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/mail}" th:object="${postage}">
+    <label for="weight">Вес: </label>
+    <input type="text" th:field="*{weight}" id="weight"/>
+    <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Weight Error</div>
+    <br/>
+    <input type="submit" value="Зарегистрировать отправление"/>
+</form>
+
+</body>
+</html>
