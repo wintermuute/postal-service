@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.wintermute.postal_service.models.Postage;
 import ru.wintermute.postal_service.repositories.MailRepository;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class MailService {
@@ -17,6 +19,13 @@ public class MailService {
         this.mailRepository = mailRepository;
     }
 
+
+    public List<Postage> findAll(){
+        return mailRepository.findAll();
+    }
+    public Postage findOne(int id) {
+        return mailRepository.findById(id).get();
+    }
     @Transactional
     public void save(Postage postage) {
         mailRepository.save(postage);

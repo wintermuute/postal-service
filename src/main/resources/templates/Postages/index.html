@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Посылки</title>
 </head>
 <body>
+<div th:each="postage : ${postages}">
+    <span>Отследить отправление - </span>
+    <a th:href="@{/mail/{id}(id=${postage.getId()})}"
+       th:text="${postage.getTrackNumber()}">book</a>
+</div>
 
+<br/>
+<hr/>
+<a href = "/mail/add"> Отправить посылку</a>
 </body>
 </html>

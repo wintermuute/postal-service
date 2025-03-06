@@ -11,6 +11,16 @@
     <input type="number" th:field="*{weight}" id="weight"/>
     <div style="color:red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Weight Error</div>
     <br/>
+    <label for="currentWarehouse">Пункт приема отправлений</label>
+    <select th:field="*{currentWarehouse}" id="currentWarehouse">
+        <option th:each="warehouse:${warehouses}" th:value="${warehouse.getId()}" th:text="${warehouse.getName()}"> option
+        </option>
+    </select>
+    <br/>
+    <label for="comment"> Комментарий к отправлению:</label>
+    <input type = "text" th:field="*{comment}" id = "comment"/>
+    <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Comment Error</div>
+    <br/>
     <input type="submit" value="Зарегистрировать отправление"/>
 </form>
 

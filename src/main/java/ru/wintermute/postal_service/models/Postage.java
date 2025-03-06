@@ -1,8 +1,9 @@
 package ru.wintermute.postal_service.models;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Entity
@@ -21,10 +22,10 @@ public class Postage {
     //какого типа столбец в БД
     @Temporal(TemporalType.TIMESTAMP)
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date timeOfCreation;
+    private LocalDateTime timeOfCreation;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timearrived")
-    private Date timeArrived;
+    private  LocalDateTime timeArrived;
     @Transient
     private int senderId;
     @Transient
@@ -45,7 +46,7 @@ public class Postage {
     public Postage() {
     }
 
-    public Postage(int trackPrefix, String trackNumber, Date timeOfCreation, Date timeArrived,double weight, double price, Status status, String comment) {
+    public Postage(int trackPrefix, String trackNumber, LocalDateTime timeOfCreation, LocalDateTime timeArrived,double weight, double price, Status status, String comment) {
         this.trackPrefix = trackPrefix;
         this.trackNumber = trackNumber;
         this.timeOfCreation = timeOfCreation;
@@ -57,7 +58,7 @@ public class Postage {
     }
 
     public void generateTrackNumber() {
-        String trackNumber = "123456" + new Random(6).nextInt();
+        String trackNumber = "123456" + new Random().nextInt();
         setTrackNumber(trackNumber);
 
     }
@@ -66,6 +67,11 @@ public class Postage {
         double price = this.weight * 0.5;
         this.setPrice(price);
 
+    }
+    public void detectCreationTime() {
+        LocalDateTime stamp = LocalDateTime.now();
+        this.setTimeOfCreation(stamp);
+        if(this.status == Status.TAKEN) this.setTimeArrived(stamp);
     }
 
     public void setTrackNumber(String trackNumber) {
@@ -104,19 +110,19 @@ public class Postage {
         this.trackPrefix = trackPrefix;
     }
 
-    public Date getTimeOfCreation() {
+    public LocalDateTime getTimeOfCreation() {
         return timeOfCreation;
     }
 
-    public void setTimeOfCreation(Date timeOfCreation) {
+    public void setTimeOfCreation(LocalDateTime timeOfCreation) {
         this.timeOfCreation = timeOfCreation;
     }
 
-    public Date getTimeArrived() {
+    public LocalDateTime getTimeArrived() {
         return timeArrived;
     }
 
-    public void setTimeArrived(Date timeArrived) {
+    public void setTimeArrived(LocalDateTime timeArrived) {
         this.timeArrived = timeArrived;
     }
 
