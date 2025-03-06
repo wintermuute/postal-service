@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>История отправления</title>
+</head>
+<body>
+<span>История отправления с номером </span><span th:text = "${entities.get(0).getTrackNumber()}">трек</span>
+<div th:each="entity : ${entities}">
+
+    <span>Дата:</span><span th:text = "${entity.getTimeofcreation() }">дата</span>
+    </br>
+    <span>Склад:</span><span th:text = "${entity.getWarehousename() }">склад</span>
+    </br>
+    <span>Статус:</span><span th:text = "${entity.getStatus() }">статус</span>
+</div>
+</body>
+</html>

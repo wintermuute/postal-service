@@ -7,4 +7,6 @@ import ru.wintermute.postal_service.models.Postage;
 
 @Repository
 public interface MailRepository extends JpaRepository<Postage, Integer> {
+
+
 }

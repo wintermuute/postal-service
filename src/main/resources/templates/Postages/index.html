@@ -5,12 +5,12 @@
     <title>Посылки</title>
 </head>
 <body>
+<div>Ваши посылки</div>
 <div th:each="postage : ${postages}">
     <span>Отследить отправление - </span>
     <a th:href="@{/mail/{id}(id=${postage.getId()})}"
-       th:text="${postage.getTrackNumber()}">book</a>
+       th:text="${postage.getTrackNumber()}">mail</a>
 </div>
-
 <br/>
 <hr/>
 <a href = "/mail/add"> Отправить посылку</a>
