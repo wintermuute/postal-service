@@ -8,6 +8,7 @@ import ru.wintermute.postal_service.controllers.WarehouseController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @SpringBootTest
 class PostalServiceApplicationTests {
 
