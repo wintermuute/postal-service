@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Результаты поиска</title>
+</head>
+<body>
+
+<p th:text="${found.getTrackNumber() }">VALUE</p>
+<div>
+  <p>Статус:</p><p th:text="${found.getStatus().getInfo()}">VALUE</p>
+</div>
+<hr/>
+<br/>
+</body>
+</html>

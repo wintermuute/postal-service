@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface MailRepository extends JpaRepository<Postage, Integer> {
 
+    Postage findByTrackNumber(String trackNumber);
+
 
 }

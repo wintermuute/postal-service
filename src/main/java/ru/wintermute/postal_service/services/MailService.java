@@ -54,4 +54,8 @@ public class MailService {
         mailRepository.save(updatedPostage);
 
     }
+
+    public Postage findByTrackNumber(String trackNumber) {
+        return mailRepository.findByTrackNumber(trackNumber);
+    }
 }
