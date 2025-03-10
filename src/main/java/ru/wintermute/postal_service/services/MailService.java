@@ -39,11 +39,19 @@ public class MailService {
         mailRepository.save(postage);
     }
 
+
+    public List<Postage> getPostagesInStore(int id) {
+        return mailDAO.findByCurrentWarehouse(id);
+    }
+
     public List<PostageHistoryEntity> getHistory(int id) {
         return mailDAO.getHistory(id);
     }
 
+    @Transactional
+    public void update(int id, Postage updatedPostage) {
+        updatedPostage.setId(id);
+        mailRepository.save(updatedPostage);
 
-
-
+    }
 }

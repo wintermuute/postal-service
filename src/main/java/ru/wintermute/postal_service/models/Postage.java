@@ -73,6 +73,18 @@ public class Postage {
         this.setTimeOfCreation(stamp);
         if(this.status == Status.TAKEN) this.setTimeArrived(stamp);
     }
+    public void resolveStatus(Status status) {
+        switch (status) {
+            case Status.ON_THE_WAY:
+            case Status.LOST:
+            case Status.RECEIVED:
+                this.setCurrentWarehouse(null);
+        }
+    }
+    public void detectTimeArrived() {
+        LocalDateTime stamp = LocalDateTime.now();
+        this.setTimeArrived(stamp);
+    }
 
     public void setTrackNumber(String trackNumber) {
         this.trackNumber = trackNumber;
@@ -169,4 +181,6 @@ public class Postage {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+
 }

@@ -11,6 +11,8 @@ import ru.wintermute.postal_service.models.Warehouse;
 import ru.wintermute.postal_service.services.MailService;
 import ru.wintermute.postal_service.services.WarehouseService;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -40,6 +42,7 @@ public class MailController {
        return "postages/show";
     }
 
+
     @GetMapping("/add")
     public String fill(Model model) {
         model.addAttribute("postage",new Postage());
@@ -59,5 +62,6 @@ public class MailController {
         return "redirect:/mail";
 
     }
+
 
 }

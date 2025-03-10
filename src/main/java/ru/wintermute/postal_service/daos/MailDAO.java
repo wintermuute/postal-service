@@ -3,8 +3,10 @@ package ru.wintermute.postal_service.daos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.wintermute.postal_service.models.Postage;
 import ru.wintermute.postal_service.models.PostageHistoryEntity;
 import ru.wintermute.postal_service.util.PostageHistoryEntityMapper;
+import ru.wintermute.postal_service.util.PostageMapper;
 
 import java.util.List;
 
@@ -25,5 +27,12 @@ public class MailDAO {
                         "join status on  history.status = status.id  where history.id=? order by timearrived asc"
                 ,new Object[]{id}, new PostageHistoryEntityMapper());
         return story;
+    }
+
+    public List<Postage> findByCurrentWarehouse(int id) {
+        List<Postage> postages = jdbcTemplate.query(
+                "select * from postage where postage.currentwarehouse = ?", new Object[]{id},new PostageMapper()
+        );
+        return postages;
     }
 }

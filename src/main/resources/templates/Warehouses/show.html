@@ -10,6 +10,15 @@
   <p>Адрес:</p><p th:text="${warehouse.getPostalCode() + ',' + warehouse.getCity() + ',' + warehouse.getStreet() + ',' + warehouse.getBuilding()}">VALUE</p>
 </div>
 <hr/>
+<div>Отправления на складе</div>
+<div th:each="postage : ${postages}">
+    <span>Отгрузить - </span>
+    <a th:href="@{/warehouses/instore/{id}(id=${postage.getId()})}"
+       th:text="${postage.getTrackNumber()}">mail</a>
+    <br/>
+</div>
+<br/>
+<hr/>
 <a th:href="@{/warehouses/{id}/edit(id=${warehouse.getId()})}">Редактировать</a>
 
 <form th:method="DELETE" th:action="@{/warehouses/{id}(id=${warehouse.getId()})}">

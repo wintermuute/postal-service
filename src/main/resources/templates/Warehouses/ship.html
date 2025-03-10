@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Отгрузка</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/warehouses/instore/{id}(id=${postage.getId()})}" th:object="${postage}">
+
+  <input type = "hidden" th:field="*{trackNumber}" id = "trackNumber"/>
+  <input type = "hidden" th:field="*{timeOfCreation}" id = "timeOfCreation"/>
+  <input type = "hidden" th:field="*{currentWarehouse}" id = "currentWarehouse"/>
+  <input type = "hidden" th:field="*{weight}" id = "weight"/>
+  <input type = "hidden" th:field="*{price}" id = "price"/>
+  <label for="status">Состояние:</label>
+  <select th:field="*{status}" id="status">
+    <option th:each="status:${statuses}" th:value="${status.ordinal()}" th:text="${status.getInfo()}"> option
+    </option>
+  </select>
+  <br/>
+  <label for="comment"> Комментарий:</label>
+  <input type = "text" th:field="*{comment}" id = "comment"/>
+  <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Comment Error</div>
+  <br/>
+  <input type="submit" value="Отгрузить"/>
+</form>
+
+</body>
+</html>
