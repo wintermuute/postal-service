@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отправления</title>
+</head>
+<body>
+<div align="center">
+<form  th:action="@{/search}">
+    Трек-номер: <input type="text" name="trackNumber" id="trackNumber" size="50" th:value="${trackNumber}" />
+    <br/>
+    <br/>
+    <input type="submit" value="Поиск" />
+</form>
+</div>
+<br/>
+<table border="3" align="center">
+<tr th:each="postage : ${postages}">
+    <td>
+    <a th:href="@{/mail/{id}(id=${postage.getId()})}"
+       th:text="${postage.getTrackNumber()}">postage</a>
+    </td>
+    <td>
+        <div th:text = "${postage.getStatus().getInfo()}">
+        </div>
+    </td>
+</tr>
+</table>
+<br/>
+<hr/>
+<div align="center">
+<span th:text="${'Количество отправлений: ' + totalItems }">VALUE</span>
+&nbsp;
+<a th:if="${currentPage > 1}" th:href="@{'/search/page/1'}">В начало</a>
+<span th:unless="${currentPage > 1}">В начало</span>
+&nbsp;
+<a th:if="${currentPage > 1}" th:href="@{'/search/page/' + ${currentPage - 1}}">Предыдущая</a>
+<span th:unless="${currentPage > 1}">Предыдущая</span>
+&nbsp;
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/search/page/' + ${i}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+</span>
+<a th:if="${currentPage < totalPages}" th:href="@{'/search/page/' + ${currentPage + 1}}">Следующая</a>
+<span th:unless="${currentPage < totalPages}">Следующая</span>
+&nbsp;
+<a th:if="${currentPage < totalPages}" th:href="@{'/search/page/' + ${totalPages}}">В конец</a>
+<span th:unless="${currentPage < totalPages}">В конец</span>
+</div>
+</body>
+</html>

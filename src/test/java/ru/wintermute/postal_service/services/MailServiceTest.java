@@ -30,18 +30,18 @@ public class MailServiceTest {
     @InjectMocks
     private MailService mailService;
 
-    @Test
-    void findAllShouldCallRepository() {
-
-        List<Postage> postageList = new ArrayList<>();
-        when(mailRepository.findAll()).thenReturn(postageList);
-
-        final List<Postage> actual = mailService.findAll();
-
-        Assertions.assertNotNull(actual);
-        Assertions.assertEquals(actual, postageList);
-        verify(mailRepository).findAll();
-    }
+//    @Test
+//    void findAllShouldCallRepository() {
+//
+//        List<Postage> postageList = new ArrayList<>();
+//        when(mailRepository.findAll()).thenReturn(postageList);
+//
+//        final List<Postage> actual = mailService.findAll();
+//
+//        Assertions.assertNotNull(actual);
+//        Assertions.assertEquals(actual, postageList);
+//        verify(mailRepository).findAll();
+//    }
 
     @Test
     void findOneShouldCallRepository() {

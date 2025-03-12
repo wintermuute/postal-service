@@ -1,6 +1,9 @@
 package ru.wintermute.postal_service.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +19,7 @@ import java.util.List;
 @Service
 public class MailService {
 
-
+    private static final int POSTAGES_PER_PAGE = 1;
     private final MailRepository mailRepository;
     private final MailDAO mailDAO;
 
@@ -27,8 +30,14 @@ public class MailService {
     }
 
     @Transactional(readOnly = true)
-    public List<Postage> findAll(){
-        return mailRepository.findAll();
+    public Page<Postage> findAll(int pageNumber, String trackNumber){
+
+        Pageable pageable = PageRequest.of(pageNumber - 1,POSTAGES_PER_PAGE);
+
+        if(trackNumber != null)
+            return mailRepository.findByTrackNumber(trackNumber,pageable);
+
+        return mailRepository.findAll(pageable);
     }
     @Transactional(readOnly = true)
     public Postage findOne(int id) {
@@ -55,7 +64,4 @@ public class MailService {
 
     }
 
-    public Postage findByTrackNumber(String trackNumber) {
-        return mailRepository.findByTrackNumber(trackNumber);
-    }
 }

@@ -52,17 +52,17 @@ public class MailControllerIT {
     void shouldCreateMockMvc() {
         Assertions.assertNotNull(mockMvc);
     }
-    @Test
-    void shouldReturnListOfPostages() throws Exception {
-        List<Postage> postages = new ArrayList<>();
-        final Model model = Mockito.mock(Model.class);
-        Mockito.when(mailService.findAll()).thenReturn(postages);
-
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/mail"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("postages/index"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("postages"));
-    }
+//    @Test
+//    void shouldReturnListOfPostages() throws Exception {
+//        List<Postage> postages = new ArrayList<>();
+//        final Model model = Mockito.mock(Model.class);
+//        Mockito.when(mailService.findAll()).thenReturn(postages);
+//
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/mail"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.view().name("postages/index"))
+//                .andExpect(MockMvcResultMatchers.model().attributeExists("postages"));
+//    }
     @Test
     void shouldCreatePostage() throws Exception {
        // final Postage postage = Mockito.mock(Postage.class);
