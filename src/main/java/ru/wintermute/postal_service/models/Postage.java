@@ -183,4 +183,11 @@ public class Postage {
     }
 
 
+    @Override
+    public String toString() {
+        return "Postage{" +
+                "trackNumber='" + trackNumber + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

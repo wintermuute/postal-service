@@ -1,9 +1,14 @@
 package ru.wintermute.postal_service.services;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +20,12 @@ import ru.wintermute.postal_service.util.PostageHistoryEntityMapper;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MailService {
 
-    private static final int POSTAGES_PER_PAGE = 1;
+
     private final MailRepository mailRepository;
     private final MailDAO mailDAO;
 
@@ -30,14 +36,26 @@ public class MailService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Postage> findAll(int pageNumber, String trackNumber){
+    public Page<Postage> findAll(Pageable pageable, String trackNumber){
 
-        Pageable pageable = PageRequest.of(pageNumber - 1,POSTAGES_PER_PAGE);
+       // Pageable pageable = PageRequest.of(pageNumber - 1,POSTAGES_PER_PAGE);
+        Specification<Postage> specification = new Specification<Postage>() {
+            @Override
+            public Predicate toPredicate(Root<Postage> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 
-        if(trackNumber != null)
-            return mailRepository.findByTrackNumber(trackNumber,pageable);
+                Predicate predicate = criteriaBuilder.conjunction();
+                if(Objects.nonNull(trackNumber)) {
+                    predicate = criteriaBuilder.equal(root.get("trackNumber"),trackNumber);
+                }
+                return predicate;
+            }
+        };
+        return mailRepository.findAll(specification,pageable);
+//        if(trackNumber != null)
+//            return mailRepository.findAll(trackNumber,pageable);
+//
+//        return mailRepository.findAll(pageable);
 
-        return mailRepository.findAll(pageable);
     }
     @Transactional(readOnly = true)
     public Postage findOne(int id) {
