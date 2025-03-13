@@ -18,7 +18,7 @@
 <table border="3" align="center">
 <tr th:each="postage : ${postages}">
     <td>
-    <a th:href="@{/mail/{id}(id=${postage.getId()})}"
+    <a th:href="@{/search/{id}(id=${postage.getId()})}"
        th:text="${postage.getTrackNumber()}">postage</a>
     </td>
     <td>
