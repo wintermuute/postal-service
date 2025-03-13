@@ -23,18 +23,9 @@ public class SearchController {
         this.mailService = mailService;
     }
 
-//    @GetMapping()
-//    @ResponseBody
-//    public List<Postage> index(Model model) {
-//        return listByPage(1,null,model);
-//    }
-
     @GetMapping()
-
     public String listByPage(@RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber, @RequestParam(name = "trackNumber", required = false) String trackNumber, Model model) {
         Page<Postage> found = mailService.findAll(PageRequest.of(pageNumber - 1,POSTAGES_PER_PAGE),trackNumber);
-
-            System.out.println(found.getContent());
 
             model.addAttribute("currentPage", pageNumber);
             model.addAttribute("trackNumber", trackNumber);
@@ -42,7 +33,7 @@ public class SearchController {
             model.addAttribute("totalPages", found.getTotalPages());
             model.addAttribute("totalItems", found.getTotalElements());
        return "search/index";
-        //return found.getContent();
+
     }
 
 
