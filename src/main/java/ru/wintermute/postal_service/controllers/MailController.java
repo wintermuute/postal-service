@@ -29,12 +29,12 @@ public class MailController {
     }
 
 
-//    @GetMapping()
-//    public String index(Model model){
-//        List<Postage> postages = mailService.findAll();
-//        model.addAttribute("postages", postages);
-//        return "postages/index";
-//    }
+    @GetMapping()
+    public String index(Model model){
+        List<Postage> postages = mailService.findAll();
+        model.addAttribute("postages", postages);
+        return "postages/index";
+    }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){

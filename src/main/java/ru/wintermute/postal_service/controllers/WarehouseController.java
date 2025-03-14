@@ -38,7 +38,7 @@ public class WarehouseController {
     }
 
     //CRUD
-
+    //открыть склад
     @GetMapping("/{id}")
     public String showOne(@PathVariable("id") int id, Model model) {
         Warehouse current = warehouseService.findOne(id);
@@ -48,6 +48,7 @@ public class WarehouseController {
         return "Warehouses/show";
 
     }
+    //редактировать склад
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
         Warehouse current = warehouseService.findOne(id);
@@ -55,46 +56,51 @@ public class WarehouseController {
         return "Warehouses/edit";
 
     }
-    @GetMapping("/instore/{id}")
-    public String ship(@PathVariable("id") int id, Model model){
-
-        Postage postage = mailService.findOne(id);
-        model.addAttribute("postage", postage);
-
-        Status[] values = Arrays.copyOfRange(Status.values(),1,Status.values().length);
-        model.addAttribute("statuses", values);
-
-        return "warehouses/ship";
-    }
 
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute("warehouse") Warehouse updatedWarehouse ){
         warehouseService.update(id,updatedWarehouse);
         return "redirect:/warehouses";
     }
-    @PatchMapping("/instore/{id}")
-    public String ship(@PathVariable("id") int id, @RequestParam("trackNumber") String trackNumber,
-                       @RequestParam("timeOfCreation") LocalDateTime timeOfCreation,
-                       @RequestParam("currentWarehouse") int currentWarehouse,
-                       @RequestParam("weight") double weight,
-                       @RequestParam("price") double price,
-                       @RequestParam("status") int statusId,
-                       @RequestParam("comment") String comment) {
-        Postage updatedPostage = new Postage();
-        updatedPostage.setTrackNumber(trackNumber);
-        updatedPostage.setTimeOfCreation(timeOfCreation);
-        updatedPostage.setCurrentWarehouse(warehouseService.findOne(currentWarehouse));
-        updatedPostage.setWeight(weight);
-        updatedPostage.setPrice(price);
-        updatedPostage.setStatus(Status.values()[statusId]);
-        updatedPostage.resolveStatus(updatedPostage.getStatus());
-        updatedPostage.detectTimeArrived();
-        updatedPostage.setComment(comment);
-        mailService.update(id,updatedPostage);
 
-        return "redirect:/warehouses/" + currentWarehouse;
-    }
+    //возможно, этот код нарушает SOLID
+//    @GetMapping("/instore/{id}")
+//    public String ship(@PathVariable("id") int id, Model model){
+//
+//        Postage postage = mailService.findOne(id);
+//        model.addAttribute("postage", postage);
+//
+//        Status[] values = Arrays.copyOfRange(Status.values(),1,Status.values().length);
+//        model.addAttribute("statuses", values);
+//
+//        return "warehouses/ship";
+//    }
+//
+//
+//    @PatchMapping("/instore/{id}")
+//    public String ship(@PathVariable("id") int id, @RequestParam("trackNumber") String trackNumber,
+//                       @RequestParam("timeOfCreation") LocalDateTime timeOfCreation,
+//                       @RequestParam("currentWarehouse") int currentWarehouse,
+//                       @RequestParam("weight") double weight,
+//                       @RequestParam("price") double price,
+//                       @RequestParam("status") int statusId,
+//                       @RequestParam("comment") String comment) {
+//        Postage updatedPostage = new Postage();
+//        updatedPostage.setTrackNumber(trackNumber);
+//        updatedPostage.setTimeOfCreation(timeOfCreation);
+//        updatedPostage.setCurrentWarehouse(warehouseService.findOne(currentWarehouse));
+//        updatedPostage.setWeight(weight);
+//        updatedPostage.setPrice(price);
+//        updatedPostage.setStatus(Status.values()[statusId]);
+//        updatedPostage.resolveStatus(updatedPostage.getStatus());
+//        updatedPostage.detectTimeArrived();
+//        updatedPostage.setComment(comment);
+//        mailService.update(id,updatedPostage);
+//
+//        return "redirect:/warehouses/" + currentWarehouse;
+//    }
 
+    //добавление нового склада
     @GetMapping("/add")
     public String addPage(Model model) {
         Warehouse warehouse = new Warehouse();
@@ -108,6 +114,7 @@ public class WarehouseController {
         return "redirect:warehouses";
     }
 
+    //удаление склада
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         warehouseService.delete(id);

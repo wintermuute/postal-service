@@ -5,11 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.wintermute.postal_service.models.Postage;
 import ru.wintermute.postal_service.models.Status;
+import ru.wintermute.postal_service.models.Warehouse;
 import ru.wintermute.postal_service.services.MailService;
 import ru.wintermute.postal_service.services.WarehouseService;
+import ru.wintermute.postal_service.util.PostageValidator;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -25,11 +28,13 @@ public class SearchController {
     private static final int POSTAGES_PER_PAGE = 2;
     private final MailService mailService;
     private final WarehouseService warehouseService;
+    private final PostageValidator postageValidator;
 
     @Autowired
-    public SearchController(MailService mailService, WarehouseService warehouseService) {
+    public SearchController(MailService mailService, WarehouseService warehouseService, PostageValidator postageValidator) {
         this.mailService = mailService;
         this.warehouseService = warehouseService;
+        this.postageValidator = postageValidator;
     }
 
     @GetMapping()
@@ -52,32 +57,37 @@ public class SearchController {
         Postage postage = mailService.findOne(id);
         model.addAttribute("postage", postage);
 
+        System.out.println(postage);
         Status[] values = Arrays.copyOfRange(Status.values(),1,Status.values().length);
         model.addAttribute("statuses", values);
+
+        List<Warehouse> warehouses = warehouseService.findAll();
+       // warehouses.add(null);
+        model.addAttribute("warehouses", warehouses);
 
         return "search/edit";
     }
 
     @PatchMapping("/{id}/ship")
-    public String ship(@PathVariable("id") int id, @RequestParam("trackNumber") String trackNumber,
+    public String ship(@PathVariable("id") int id,
+                       @RequestParam("trackNumber") String trackNumber,
                        @RequestParam("timeOfCreation") LocalDateTime timeOfCreation,
                        @RequestParam("currentWarehouse") int currentWarehouse,
                        @RequestParam("weight") double weight,
                        @RequestParam("price") double price,
                        @RequestParam("status") int statusId,
                        @RequestParam("comment") String comment) {
-        Postage updatedPostage = new Postage();
-        updatedPostage.setTrackNumber(trackNumber);
-        updatedPostage.setTimeOfCreation(timeOfCreation);
-        //тут баг с нулловым складом
-        updatedPostage.setCurrentWarehouse(warehouseService.findOne(currentWarehouse));
-        updatedPostage.setWeight(weight);
-        updatedPostage.setPrice(price);
-        updatedPostage.setStatus(Status.values()[statusId]);
-        updatedPostage.resolveStatus(updatedPostage.getStatus());
-        updatedPostage.detectTimeArrived();
-        updatedPostage.setComment(comment);
-        mailService.update(id,updatedPostage);
+          Postage updatedPostage = new Postage();
+          updatedPostage.setTrackNumber(trackNumber);
+          updatedPostage.setTimeOfCreation(timeOfCreation);
+          updatedPostage.setCurrentWarehouse(warehouseService.findOne(currentWarehouse));
+          updatedPostage.setWeight(weight);
+          updatedPostage.setPrice(price);
+          updatedPostage.setStatus(Status.values()[statusId]);
+          updatedPostage.resolveStatus(updatedPostage.getStatus());
+          updatedPostage.detectTimeArrived();
+          updatedPostage.setComment(comment);
+          mailService.update(id,updatedPostage);
 
         return "redirect:/search/{id}";
     }

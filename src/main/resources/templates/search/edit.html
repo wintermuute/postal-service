@@ -8,13 +8,19 @@
 <div>
   <p th:text="${'текущий статус отправления - ' + postage.getStatus().getInfo() }">VALUE</p>
 </div>
+<br/>
 <form th:method="PATCH" th:action="@{/search/{id}/ship(id=${postage.getId()})}" th:object="${postage}">
 
   <input type = "hidden" th:field="*{trackNumber}" id = "trackNumber"/>
   <input type = "hidden" th:field="*{timeOfCreation}" id = "timeOfCreation"/>
-  <input type = "hidden" th:field="*{currentWarehouse}" id = "currentWarehouse"/>
+
   <input type = "hidden" th:field="*{weight}" id = "weight"/>
   <input type = "hidden" th:field="*{price}" id = "price"/>
+  <label for="currentWarehouse">Пункт приема отправлений</label>
+  <select th:field="*{currentWarehouse}" id="currentWarehouse">
+    <option th:each="warehouse:${warehouses}" th:value="${warehouse.getId()}" th:text="${warehouse.getName()}" th:selected = "${warehouse==postage.getCurrentWarehouse()}"> option
+    </option>
+  </select>
   <label for="status">Изменить статус:</label>
   <select th:field="*{status}" id="status">
     <option th:each="status:${statuses}" th:value="${status.ordinal()}" th:text="${status.getInfo()}"> option

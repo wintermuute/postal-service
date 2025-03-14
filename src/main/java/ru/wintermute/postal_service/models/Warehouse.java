@@ -102,4 +102,11 @@ public class Warehouse {
     public void setPostagesInStore(List<Postage> postagesInStore) {
         this.postagesInStore = postagesInStore;
     }
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

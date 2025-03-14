@@ -182,12 +182,18 @@ public class Postage {
         this.comment = comment;
     }
 
-
     @Override
     public String toString() {
         return "Postage{" +
-                "trackNumber='" + trackNumber + '\'' +
+                "id=" + id +
+                ", trackNumber='" + trackNumber + '\'' +
+                ", timeOfCreation=" + timeOfCreation +
+                ", timeArrived=" + timeArrived +
+                ", currentWarehouse=" + currentWarehouse +
+                ", weight=" + weight +
+                ", price=" + price +
                 ", status=" + status +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 }

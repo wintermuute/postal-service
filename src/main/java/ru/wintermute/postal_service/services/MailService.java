@@ -51,11 +51,11 @@ public class MailService {
             }
         };
         return mailRepository.findAll(specification,pageable);
-//        if(trackNumber != null)
-//            return mailRepository.findAll(trackNumber,pageable);
-//
-//        return mailRepository.findAll(pageable);
+    }
 
+    @Transactional(readOnly = true)
+    public List<Postage> findAll(){
+        return mailRepository.findAll();
     }
     @Transactional(readOnly = true)
     public Postage findOne(int id) {
