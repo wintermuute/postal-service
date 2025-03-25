@@ -62,8 +62,9 @@ public class MailService {
         return mailRepository.findById(id).get();
     }
     @Transactional
-    public void save(Postage postage) {
+    public Postage save(Postage postage) {
         mailRepository.save(postage);
+        return postage;
     }
 
 
